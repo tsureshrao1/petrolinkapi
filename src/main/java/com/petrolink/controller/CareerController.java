@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,7 @@ import com.petrolink.dao.CareerDao;
 import com.petrolink.model.Career;
 
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/petrolink")
 public class CareerController {
@@ -26,10 +27,16 @@ public class CareerController {
 	@Autowired
 	private CareerDao careerDao;
 
-	@PostMapping("/career")
-	public String career(@RequestBody List<Career> carrers) {
+	@PostMapping("/careers")
+	public List<Career> career(@RequestBody List<Career> carrers) {
 		careerDao.save(carrers);
-		return "Careers Added : " + carrers.size();
+		return carrers;
+	}
+	
+	@PostMapping("/career")
+	public Career career(@RequestBody Career carrer) {
+		careerDao.save(carrer);
+		return carrer;
 	}
 
 	@GetMapping("/career")
@@ -39,23 +46,28 @@ public class CareerController {
 	
 	@GetMapping("/career/{id}")
 	public Career get(@PathVariable int id) {
-		Career carrer = careerDao.findOne(id);
-		if(carrer != null) {
-			return carrer;
-		}else {
-			throw new RuntimeException("Career not found for the id "+id);
+		
+		Career carrer = null;
+		try {
+			carrer = careerDao.findOne(id);
+		}catch (Exception e) {
+			throw new RuntimeException("Career not found for the id "+id, e);
 		}
+		
+		return carrer;
 	}
 	
 	@DeleteMapping("/career/{id}")
-	public String deleteCareer(@PathVariable int id) {
+	public Career deleteCareer(@PathVariable int id) {
+		Career carrer = null;
 		try {
+			carrer = careerDao.findOne(id);
 			careerDao.delete(id);
 		}catch (Exception e) {
 			throw e;
 		}
 		
-		return "Career record delected";
+		return carrer;
 	}
 	
 	
