@@ -1,0 +1,100 @@
+
+POST Create Request:
+
+http://localhost:9090/petrolink/career
+
+{    
+    "role": "Mechanics",
+    "jobSummary": "Minimum (7) years of Experience in Maintanance in Drilling Industry.",
+    "jobDescription": "Minimum (7) years of Experience in Maintanance in Drilling Industry. Minimum (7) years of Experience in Maintanance in Drilling Industry"
+}
+
+PUT Update Request
+
+lastUpdatedDate updated request not required. Even if send also inside controller it will update it.
+
+{
+    "id": 1,
+    "role": "Mechanics",
+    "jobSummary": "Minimum (7) years of Experience in Maintanance in Drilling Industry.",
+    "jobDescription": "Minimum (7) years of Experience in Maintanance in Drilling Industry. Minimum (7) years of Experience in Maintanance in Drilling Industry",
+    "status": true,
+    "createdDate": 1593835941814,
+    "lastUpdatedDate": 1593835941814
+}
+
+
+http://localhost:9090/petrolink/career
+
+
+http://localhost:9090/petrolink/profile
+
+{
+    
+    "careerId": 2,
+    "name": "suresh",
+    "email": "adasfc@test.com",
+    "phoneNumber":"123123414"
+}
+
+response
+
+{
+    "id": 3,
+    "careerId": 2,
+    "name": "suresh",
+    "dateOfbirth": null,
+    "nationality": null,
+    "email": "adasfc@test.com",
+    "phoneNumber": "123123414",
+    "describeCurrentJob": null,
+    "expAbroad": null,
+    "expOthers": null,
+    "qualifications": null,
+    "joiningPeriod": null,
+    "currentSalary": null,
+    "expSalary": null,
+    "presentLocation": null
+}
+In below example id is careerId number not profile number
+
+http://localhost:9090/petrolink/profile/career/1
+
+
+
+
+http://localhost:9090/petrolink/admin/user
+
+{
+    
+    "userName": "kamesh",
+    "password": "suresh",
+    "email": "adasfc@test.com"
+}
+
+reponse:
+
+[
+    {
+        "id": 1,
+        "userName": "subbu",
+        "password": "suresh",
+        "email": "adasfc@test.com",
+        "status": true,
+        "createdDate": 1593845908000,
+        "lastLoggedIn": null,
+        "lastLoggedOut": null
+    },
+    {
+        "id": 2,
+        "userName": "kamesh",
+        "password": "suresh",
+        "email": "adasfc@test.com",
+        "status": true,
+        "createdDate": 1593845927000,
+        "lastLoggedIn": null,
+        "lastLoggedOut": null
+    }
+]
+
+
