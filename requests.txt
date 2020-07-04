@@ -98,3 +98,16 @@ reponse:
 ]
 
 
+
+external file reading where jar and external file at same location
+
+application.properties
+java -jar myspringboot.jar
+
+
+java -jar myspringboot.jar --my.filepath="c:\\sample\upload"
+
+
+
+
+
