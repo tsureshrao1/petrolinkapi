@@ -1,5 +1,6 @@
 package com.petrolink.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,14 +28,18 @@ public class CareerController {
 	@Autowired
 	private CareerDao careerDao;
 
-	@PostMapping("/careers")
-	public List<Career> career(@RequestBody List<Career> carrers) {
-		careerDao.save(carrers);
-		return carrers;
-	}
+	/*
+	 * @PostMapping("/careers") public List<Career> career(@RequestBody List<Career>
+	 * carrers) { careerDao.save(carrers); return carrers; }
+	 */
+	
 	
 	@PostMapping("/career")
 	public Career career(@RequestBody Career carrer) {
+		
+		carrer.setCreatedDate(new Date());
+		carrer.setLastUpdatedDate(new Date());
+		carrer.setStatus(true);
 		careerDao.save(carrer);
 		return carrer;
 	}
@@ -73,6 +78,7 @@ public class CareerController {
 	
 	@PutMapping("/career")
 	public Career updateCareer(@RequestBody Career carrer) {
+		carrer.setLastUpdatedDate(new Date());
 		careerDao.save(carrer);
 		return careerDao.save(carrer);
 	}

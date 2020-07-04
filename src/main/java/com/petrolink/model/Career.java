@@ -1,5 +1,7 @@
 package com.petrolink.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,66 +22,110 @@ public class Career {
 	
 	@Column
 	private String role;
+	
 	@Column
-	private String skills;
-	@Column
-	private String location;
+	private String jobSummary;
+	
 	@Column
 	private String jobDescription;
+	
+	@Column
+	private boolean status;
+	
+	@Column
+	private Date createdDate;
+	
+	@Column
+	private Date lastUpdatedDate;
+	
 		
 	public Career() {
 		super();
 	}
-	
-	
-	
-	
-	public Career(String role, String skills, String location, String jobDescription) {
+
+
+	public Career(Integer id, String role, String jobSummary, String jobDescription, boolean status, Date createdDate,
+			Date lastUpdatedDate) {
 		super();
+		this.id = id;
 		this.role = role;
-		this.skills = skills;
-		this.location = location;
+		this.jobSummary = jobSummary;
 		this.jobDescription = jobDescription;
+		this.status = status;
+		this.createdDate = createdDate;
+		this.lastUpdatedDate = lastUpdatedDate;
 	}
 
-   
+
 	public Integer getId() {
 		return id;
 	}
+
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
 
-
-
 	public String getRole() {
 		return role;
 	}
+
+
 	public void setRole(String role) {
 		this.role = role;
 	}
-	public String getSkills() {
-		return skills;
+
+
+	public String getJobSummary() {
+		return jobSummary;
 	}
-	public void setSkills(String skills) {
-		this.skills = skills;
+
+
+	public void setJobSummary(String jobSummary) {
+		this.jobSummary = jobSummary;
 	}
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
+
+
 	public String getJobDescription() {
 		return jobDescription;
 	}
+
+
 	public void setJobDescription(String jobDescription) {
 		this.jobDescription = jobDescription;
+	}
+
+
+	public boolean getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+
+	public Date getLastUpdatedDate() {
+		return lastUpdatedDate;
+	}
+
+
+	public void setLastUpdatedDate(Date lastUpdatedDate) {
+		this.lastUpdatedDate = lastUpdatedDate;
 	}
 	
 	
 	
-
 }
