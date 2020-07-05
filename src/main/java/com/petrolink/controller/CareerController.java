@@ -45,8 +45,9 @@ public class CareerController {
 	}
 
 	@GetMapping("/career")
-	public List<Career> getCareers() {
-		return (List<Career>) careerDao.findAll();
+	public List<Career> getCareers() {	
+		
+		return (List<Career>) careerDao.findCareersByStatusActive();
 	}
 	
 	@GetMapping("/career/{id}")
