@@ -7,10 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Profile")
+@Table(name = "Profile",
+indexes = {@Index(name = "PROFILE_INDX_0", columnList = "careerId")})
 public class Profile {
 
 	@Id
