@@ -50,6 +50,12 @@ public class CareerController {
 		return (List<Career>) careerDao.findCareersByStatusActive();
 	}
 	
+	@GetMapping("/career/deactive")
+	public List<Career> getDeactiveCareers() {	
+		
+		return (List<Career>) careerDao.findCareersByStatusDeActive();
+	}
+	
 	@GetMapping("/career/{id}")
 	public Career get(@PathVariable int id) {
 		

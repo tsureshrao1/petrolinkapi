@@ -11,5 +11,8 @@ public interface CareerDao extends CrudRepository<Career, Integer> {
 	
 	@Query("SELECT career FROM Career career WHERE career.status = 1 order by career.id  desc")
 	List<Career> findCareersByStatusActive();
+	
+	@Query("SELECT career FROM Career career WHERE career.status = 0 order by career.id  desc")
+	List<Career> findCareersByStatusDeActive();
 
 }
