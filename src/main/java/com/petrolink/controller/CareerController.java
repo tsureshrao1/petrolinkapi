@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.petrolink.dao.CareerDao;
+import com.petrolink.dao.ProfileDao;
 import com.petrolink.model.Career;
+import com.petrolink.model.Profile;
 
 
 @CrossOrigin
@@ -27,6 +29,9 @@ public class CareerController {
 	
 	@Autowired
 	private CareerDao careerDao;
+	
+	@Autowired
+	private ProfileDao profileDao;
 
 	/*
 	 * @PostMapping("/careers") public List<Career> career(@RequestBody List<Career>
@@ -75,6 +80,24 @@ public class CareerController {
 		try {
 			carrer = careerDao.findOne(id);
 			careerDao.delete(id);
+			
+			List<Profile> profiles = null;
+			try {
+				profiles = profileDao.findProfileByCareerId(id);
+				if(profiles != null) {
+					for(Profile pro : profiles) {
+						try {
+							profileDao.delete(pro.getId());
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException("Job Posting not found for the careerId " + id, e);
+			}
+			
 		}catch (Exception e) {
 			throw e;
 		}
