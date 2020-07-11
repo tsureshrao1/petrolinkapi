@@ -28,11 +28,41 @@ public class AdminUserController {
 	@PostMapping("/admin/user")
 	public AdminUser createAdminUser(@RequestBody AdminUser adminUser) {
 
+		
+		AdminUser user = adminUserDao.findAdminUser(adminUser.getUserName(), adminUser.getPassword());
+		
+		if(user != null) {
+			System.out.println("Existing user with same username and password found. User Name : "+adminUser.getUserName());
+			return null;
+			
+		}
+			
 		adminUser.setStatus(true);
 		adminUser.setCreatedDate(new Date());
 		adminUserDao.save(adminUser);
+		
+		System.out.println("New User created with username and password. User Name : "+adminUser.getUserName());
+		
 		return adminUser;
 	}
+	
+	
+	@PostMapping("/admin/user/login")
+	public AdminUser loginAdminUser(@RequestBody AdminUser adminUser) {
+
+		AdminUser user = adminUserDao.findAdminUser(adminUser.getUserName(), adminUser.getPassword());
+		
+		if(user != null) {
+			System.out.println("Login user name and password found. User Name : "+adminUser.getUserName());
+			return user;
+		}
+		
+		System.out.println("Login user name and password not found. User Name : "+adminUser.getUserName());
+		
+		return null;
+	}
+	
+	
 
 	@GetMapping("/admin/user")
 	public List<AdminUser> getAdminUsers() {
