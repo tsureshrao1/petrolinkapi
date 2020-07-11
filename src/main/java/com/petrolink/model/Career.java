@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -24,10 +25,12 @@ public class Career {
 	@Column
 	private String role;
 
-	@Column
+	@Lob
+	@Column(length = 512)
 	private String jobSummary;
 
-	@Column
+	@Lob
+	@Column(length = 1024)
 	private String jobDescription;
 
 	@Column
