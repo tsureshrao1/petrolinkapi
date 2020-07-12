@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,13 @@ import com.petrolink.model.AdminUser;
 @RestController
 @RequestMapping("/petrolink")
 public class AdminUserController {
+	
+	
+	@Value("${admin.default.user}")
+	private String adminDefautUser;
+	
+	@Value("${admin.default.password}")
+	private String adminDefautPassword;
 
 	@Autowired
 	private AdminUserDao adminUserDao;
@@ -55,6 +63,16 @@ public class AdminUserController {
 		if(user != null) {
 			System.out.println("Login user name and password found. User Name : "+adminUser.getUserName());
 			return user;
+		}
+		
+		if(user == null && adminDefautUser.equals(adminUser.getUserName()) 
+				&& adminDefautPassword.equals(adminUser.getPassword())) {
+			
+			adminUser.setStatus(true);
+			adminUser.setCreatedDate(new Date());
+			adminUserDao.save(adminUser);
+			
+			return adminUser;
 		}
 		
 		System.out.println("Login user name and password not found. User Name : "+adminUser.getUserName());

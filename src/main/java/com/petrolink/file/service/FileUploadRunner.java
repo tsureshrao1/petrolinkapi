@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class FileUploadRunner implements Runnable {
 
@@ -29,7 +30,7 @@ public class FileUploadRunner implements Runnable {
 
 		try {
 			Path root = Paths.get(filePath);
-			Files.copy(inputStream, root.resolve(fileName));
+			Files.copy(inputStream, root.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -2,9 +2,9 @@ package com.petrolink.controller;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.petrolink.dao.CareerDao;
 import com.petrolink.dao.ProfileDao;
+import com.petrolink.file.service.FileDeleteRunner;
 import com.petrolink.model.Career;
-import com.petrolink.model.Profile;
 
 
 @CrossOrigin
@@ -27,12 +27,16 @@ import com.petrolink.model.Profile;
 public class CareerController {
 	
 	
+	
 	@Autowired
-	private CareerDao careerDao;
+	private CareerDao careerDao;	
+	
+	@Value("${filePath}")
+	private String filePath;
 	
 	@Autowired
 	private ProfileDao profileDao;
-
+	
 	/*
 	 * @PostMapping("/careers") public List<Career> career(@RequestBody List<Career>
 	 * carrers) { careerDao.save(carrers); return carrers; }
@@ -80,23 +84,7 @@ public class CareerController {
 		try {
 			carrer = careerDao.findOne(id);
 			careerDao.delete(id);
-			
-			List<Profile> profiles = null;
-			try {
-				profiles = profileDao.findProfileByCareerId(id);
-				if(profiles != null) {
-					for(Profile pro : profiles) {
-						try {
-							profileDao.delete(pro.getId());
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new RuntimeException("Job Posting not found for the careerId " + id, e);
-			}
+			new Thread(new FileDeleteRunner(id, filePath, profileDao)).start();
 			
 		}catch (Exception e) {
 			throw e;
