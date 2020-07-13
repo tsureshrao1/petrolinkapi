@@ -138,6 +138,7 @@ public class JobApplication {
 				// + file.getName() + "\""));
 
 				// Here we have mentioned it to show as attachment
+				response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
 				response.setHeader("Content-Disposition",
 						String.format("attachment; filename=\"" + originalFileName + "\""));
 
