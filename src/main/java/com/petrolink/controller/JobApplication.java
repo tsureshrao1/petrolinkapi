@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.petrolink.dao.ProfileDao;
+import com.petrolink.file.service.FileDirectProfileDeleteRunner;
 import com.petrolink.file.service.FileUploadRunner;
 import com.petrolink.model.Profile;
 
@@ -69,10 +71,56 @@ public class JobApplication {
 
 		return profile;
 	}
+	
+	@PostMapping("/directProfile")
+	public Profile directProfle(@RequestParam("file") MultipartFile file, @RequestParam("profile") String data) {
+
+		Profile profile = null;
+
+		try {
+			profile = new ObjectMapper().readValue(data, Profile.class);
+			
+			profile.setAppliedType("DIRECT");
+			profileDao.save(profile);
+									
+			String profileId = String.valueOf(profile.getId());
+			String fileName = file.getOriginalFilename();
+
+			String extendedFileName = "DP" + "_" + profileId + "_" + fileName;
+
+			new Thread(new FileUploadRunner(file.getInputStream(), filePath, extendedFileName)).start();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(" Exception occured while job posting ", e);
+		}
+
+		return profile;
+	}
 
 	@GetMapping("/profile")
 	public List<Profile> getProfiles() {
 		return (List<Profile>) profileDao.findAll();
+	}
+	
+	@GetMapping("/directProfile")
+	public List<Profile> getDirectProfiles() {
+		return (List<Profile>) profileDao.findDirectProfiles();
+	}
+	
+	@DeleteMapping("/directProfile/{id}")
+	public Profile deleteProfile(@PathVariable int id) {
+		Profile profile = null;
+		try {
+			profile = profileDao.findOne(id);
+			profileDao.delete(id);
+			new Thread(new FileDirectProfileDeleteRunner(id, filePath, profileDao)).start();
+			
+		}catch (Exception e) {
+			throw e;
+		}
+		
+		return profile;
 	}
 
 	@GetMapping("/profile/career/{careerId}")

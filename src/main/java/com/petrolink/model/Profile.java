@@ -12,7 +12,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Profile",
-indexes = {@Index(name = "PROFILE_INDX_0", columnList = "careerId")})
+indexes = {@Index(name = "PROFILE_INDX_0", columnList = "careerId"),
+		   @Index(name = "PROFILE_INDX_1", columnList = "appliedType")})
 public class Profile {
 
 	@Id
@@ -64,6 +65,9 @@ public class Profile {
 
 	@Column
 	private String presentLocation;
+	
+	@Column
+	private String appliedType;
 
 	public Profile() {
 		// TODO Auto-generated constructor stub
@@ -72,7 +76,7 @@ public class Profile {
 	public Profile(Integer id, Integer careerId, String name, Date dateOfbirth, String nationality, String email,
 			String phoneNumber, String mobileNumber, String describeCurrentJob, String expAbroad, String expOthers,
 			String qualifications, String joiningPeriod, String currentSalary, String expSalary,
-			String presentLocation) {
+			String presentLocation, String appliedType) {
 		super();
 		this.id = id;
 		this.careerId = careerId;
@@ -90,6 +94,7 @@ public class Profile {
 		this.currentSalary = currentSalary;
 		this.expSalary = expSalary;
 		this.presentLocation = presentLocation;
+		this.appliedType = appliedType;
 	}
 
 	public Integer getId() {
@@ -220,4 +225,12 @@ public class Profile {
 		this.presentLocation = presentLocation;
 	}
 
+	public String getAppliedType() {
+		return appliedType;
+	}
+
+	public void setAppliedType(String appliedType) {
+		this.appliedType = appliedType;
+	}
+	
 }

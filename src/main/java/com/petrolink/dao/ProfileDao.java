@@ -13,4 +13,7 @@ public interface ProfileDao extends CrudRepository<Profile, Integer> {
 	@Query("SELECT profile FROM Profile profile WHERE profile.careerId = ?1")
 	List<Profile> findProfileByCareerId(Integer careerId);
 	
+	@Query("SELECT profile FROM Profile profile WHERE profile.appliedType = 'DIRECT' order by profile.id desc")
+	List<Profile> findDirectProfiles();
+	
 	}
