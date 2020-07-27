@@ -108,6 +108,19 @@ public class JobApplication {
 		return (List<Profile>) profileDao.findDirectProfiles();
 	}
 	
+	@GetMapping("/directProfile/{id}")
+	public Profile getDirectProfile(@PathVariable int id) {
+		
+		Profile profile = null;
+		try {
+			profile = profileDao.findOne(id);
+		}catch (Exception e) {
+			throw new RuntimeException("Profile not found for the id "+id, e);
+		}
+		
+		return profile;
+	}
+	
 	@DeleteMapping("/directProfile/{id}")
 	public Profile deleteProfile(@PathVariable int id) {
 		Profile profile = null;
