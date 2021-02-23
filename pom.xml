@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.petrolink</groupId>
-	<artifactId>petrolink</artifactId>
+	<artifactId>petrolinkboot</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
 	<name>petrolinkboot</name>
